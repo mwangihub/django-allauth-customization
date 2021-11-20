@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-5 mb-4 rounded-3">
+    <div class="container-fluid py-5">
+        <h4 class="fw-bold"><span class="text-info">{{user.get_full_name|default:user.email|title}}</span> profile </h4>
+        <p class="col-md-8 fs-6">Using a series of utilities, you can create this jumbotron, just like the one in
+            previous versions of Bootstrap. Check out the examples below for how you can remix and restyle it to your
+            liking.</p>
+        {% if request.user.is_authenticated %}
+            <a class="btn btn-info btn-sm text-white" href="{% url 'user_urls:logout' %}">Logout</a>
+        {% endif %}
+        
+    </div>
+</div>
+
+{% endblock content %}

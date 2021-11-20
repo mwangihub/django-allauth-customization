@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="p-5 mb-4 rounded-3">
+    <div class="container-fluid py-5">
+            <h4 class="fw-bold">Acoout type</h4>
+            <p class="col-md-8 lead">Choose account type.</p>
+
+            <p class="col-md-8 fs-6 ">Long paragraph with expalnaton of each account type, privillages or e.t.c.</p>
+            <div class="container py-5">
+                <a href="{% url 'user_urls:register-employee' %}" class="btn btn-success text-white">Looking for job?</a>
+                <a href="{% url 'user_urls:register-cutomer' %}" class="btn btn-info ms-2 text-white">You want to buy something?</a>
+                <a href="#" class="btn btn-warning ms-5 text-white">Join us as staff</a>
+            </div>  
+    </div>
+</div>
+
+{% endblock content %}
