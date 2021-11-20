@@ -2,7 +2,6 @@
 {% load account_type %}
 <!doctype html>
 <html lang="en">
-
 <head>
   <meta charset="utf-8">
   <title>Django All Auth</title>
@@ -12,21 +11,16 @@
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/innitial.css" %}">
   <link rel="stylesheet" type="text/css" href="{% static "admin/css/boot.css" %}">
 </head>
-
 <body>
   <header>
     <div>
       <a class="logo" href="/">
-        Django All-auth {% if request.user.is_authenticated %} 
+        Django All-auth Customization{% if request.user.is_authenticated %} 
         <span class="ms-sm-4 ms-4 text-warning">{{request.user|account_type}}</span>{% endif %}
       </a>
     </div>
     <div class="d-flex">
-      <p class="ms-2"><a href="{% url 'admin:index' %}">
-          Admin
-        </a></p>
-     
-
+      <p class="ms-2"><a href="{% url 'admin:index' %}">Admin</a></p>
       {% if request.user.is_authenticated %}
       <p class="ms-3 text-warning">
         <a class="text-warning" href="{% url 'profile' %}"> | {{user.get_full_name|default:user.email}}</a>
@@ -37,11 +31,8 @@
         <p class="ms-3"><a href="{% url 'user_urls:sign-up' %}">Create account</a></p>
       {% endif %}
     </div>
-
   </header>
-
   {% block content %}
-
   {% endblock content %}
 </body>
 

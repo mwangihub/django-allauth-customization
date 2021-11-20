@@ -18,7 +18,6 @@
         <a href="https://django-allauth.readthedocs.io/en/latest/index.html" class="text-primary">DOCS</a>
       </p>
     </div>
-
     <div class="col-md-10 mx-auto col-lg-5">
       {% if not request.user.is_authenticated %}
         <form class="p-4 p-md-5 border rounded-3" action="{% url 'user_urls:user_login' %}" method="post">
@@ -30,7 +29,6 @@
           <div class=" mb-4">
            <input type="password" name="password" class="textinput textInput form-control" required="" id="id_password" placeholder="password">
           </div>
-        
           <button class="w-100 btn btn-sm btn-primary" type="submit">Sign in</button>
           <hr class="my-4">
           <small class="text-muted">Create your custo login for here</small>

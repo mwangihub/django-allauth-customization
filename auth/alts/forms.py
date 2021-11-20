@@ -13,6 +13,9 @@ class CustomAuthForm(AuthenticationForm):
 
 
 class RegisterForm(UserCreationForm):
+    '''
+        Default registration form
+    '''
     def save(self, commit=True):
         user = super(RegisterForm, self).save(commit=False)
         user.set_password(self.cleaned_data["password1"])
@@ -22,6 +25,9 @@ class RegisterForm(UserCreationForm):
 
 
 class EmployeeSignUpForm(UserCreationForm):
+    '''
+        Customer only registration form
+    '''
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
@@ -35,6 +41,9 @@ class EmployeeSignUpForm(UserCreationForm):
 
 
 class CustomerSignUpForm(UserCreationForm):
+    '''
+        Customer only registration form
+    '''
     class Meta:
         model = User
         fields = ('email', 'first_name', 'last_name')
@@ -47,11 +56,7 @@ class CustomerSignUpForm(UserCreationForm):
         return user
 
 
-class UserAdminCreationForm(forms.ModelForm):
-    """
-    A form for creating new users. Includes all the required
-    fields, plus a repeated password.
-    """
+class AdminCreationForm(forms.ModelForm):
     password1 = forms.CharField(label='Password', widget=forms.PasswordInput)
     password2 = forms.CharField(
         label='Password confirmation', widget=forms.PasswordInput)
@@ -75,13 +80,8 @@ class UserAdminCreationForm(forms.ModelForm):
         return user
 
 
-class UserAdminChangeForm(forms.ModelForm):
-    """A form for updating users. Includes all the fields on
-    the user, but replaces the password field with admin's
-    password hash display field.
-    """
+class AdminChangeForm(forms.ModelForm):
     password = ReadOnlyPasswordHashField()
-
     class Meta:
         model = User
         fields = '__all__'
@@ -90,7 +90,7 @@ class UserAdminChangeForm(forms.ModelForm):
         return self.initial["password"]
 
 
-class PasswordResetRequestForm(forms.Form):
+class PasswordResetForm(forms.Form):
     email = forms.EmailField(label="Email", max_length=254)
 
 

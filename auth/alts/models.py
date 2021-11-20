@@ -7,40 +7,21 @@ from django.dispatch import receiver
 
 class UserManager(BaseUserManager):
     def create_user(self, email, password=None):
-        """
-        Creates and saves a User with the given email and password.
-        """
         if not email:
-            raise ValueError('Users must have an email address')
-
-        user = self.model(
-            email=self.normalize_email(email),
-        )
-
+            raise ValueError('Email address must be set')
+        user = self.model( email=self.normalize_email(email),)
         user.set_password(password)
         user.save(using=self._db)
         return user
 
     def create_staffuser(self, email, password):
-        """
-        Creates and saves a staff user with the given email and password.
-        """
-        user = self.create_user(
-            email,
-            password=password,
-        )
+        user = self.create_user(email, password=password,)
         user.staff = True
         user.save(using=self._db)
         return user
 
     def create_superuser(self, email, password):
-        """
-        Creates and saves a superuser with the given email and password.
-        """
-        user = self.create_user(
-            email,
-            password=password,
-        )
+        user = self.create_user(email,password=password,)
         user.staff = True
         user.admin = True
         user.non = False
@@ -48,8 +29,10 @@ class UserManager(BaseUserManager):
         return user
 
 
-
 class User(AbstractBaseUser):
+    '''
+    Fill the list with the field that are mandatory REQUIRED_FIELDS = [] 
+    '''
     email = models.EmailField(verbose_name='email address', max_length=255,unique=True,)
     first_name =  models.CharField(verbose_name='first name',max_length=255,)
     last_name =  models.CharField(verbose_name='last name',max_length=255,)
@@ -62,7 +45,8 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ["names",]
+
+    REQUIRED_FIELDS = []
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
@@ -100,13 +84,17 @@ class User(AbstractBaseUser):
         return self.non
 
 @receiver(user_signed_up)
-def populate_profile(sociallogin, user, **kwargs):    
+def populate_profile(sociallogin, user, **kwargs):   
+    '''
+    Very useful to set user profile account. Uncomment bottom user save methods if 
+    there is user profile model. You can 
+    print(user.socialaccount_set.filter(provider=sociallogin.account.provider)[0].extra_data) 
+    to see extra data from the provider 
+
+    NOTE: It is not recommended to place signals here.
+    ''' 
     user.active=True
     user.save()
-    '''Very useful to set user profile account. Uncomment bootom user save methods if 
-    there is user profile model you can 
-    print(user.socialaccount_set.filter(provider=sociallogin.account.provider)[0].extra_data) 
-    to see extra data from the provider '''
     if sociallogin.account.provider == 'facebook':
         data = user.socialaccount_set.filter(provider='facebook')[0].extra_data
         picture_url = "http://graph.facebook.com/" + sociallogin.account.uid + "/picture?type=large"            

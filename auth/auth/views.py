@@ -19,6 +19,7 @@ class HomeView(generic.View):
         }
         return render(request, "default/index.html", context)
 
+
 @method_decorator([login_required(login_url='user_urls:user_login'),], name='dispatch')
 class ProfileView(generic.View):
     def get(self, request, *args, **kwargs):

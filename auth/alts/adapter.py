@@ -1,4 +1,11 @@
+'''
+    Overidding adapters to change core behaviour of redirects and how user will be saved.
+    User attr can be also be changed in signals in models.py
+        allauth.socialaccount.adapter.DefaultSocialAccountAdapter
+        allauth.account.adapter.DefaultAccountAdapter
+'''
 from allauth.account.adapter import DefaultAccountAdapter
+from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 from django.urls import reverse
 
 class AccountAdapter(DefaultAccountAdapter):
@@ -9,8 +16,6 @@ class AccountAdapter(DefaultAccountAdapter):
     def get_signup_redirect_url(self, request):
         url = reverse("choose-user")
         return url
-
-from allauth.socialaccount.adapter import DefaultSocialAccountAdapter
 
 class SocialAccountAdapter(DefaultSocialAccountAdapter):
 

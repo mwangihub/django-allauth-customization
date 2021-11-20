@@ -32,10 +32,6 @@ def staff_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login
     return actual_decorator
 
 
-def non_checker(request, *args, **kwargs):
-    pass
-
-
 def non_required(function=None, redirect_field_name='/', login_url='home'):
     '''
     Decorator for views that checks that the logged in user has no account type,
